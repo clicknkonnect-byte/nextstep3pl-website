@@ -122,3 +122,11 @@ ErrorDocument 404 /404.html
 </FilesMatch>
 
 RedirectMatch 404 /\.git
+
+# --------------------------------------------------------------------------
+# 11. Working directories that must never be served.
+#     The deploy workflow already excludes these, so this is a second line of
+#     defence for manual uploads (dragging the whole folder into File Manager
+#     would otherwise expose the keyword strategy and business data publicly).
+# --------------------------------------------------------------------------
+RedirectMatch 404 ^/(seo|tools)(/|$)

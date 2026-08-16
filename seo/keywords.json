@@ -1,0 +1,197 @@
+{
+  "_comment": "Target keyword map: one primary keyword per URL, plus supporting terms. One page should own one primary keyword — two pages targeting the same term compete with each other (keyword cannibalisation) and both rank worse. Before creating a new page or post, check its primary keyword is not already claimed here. 'position' is filled in by the weekly run from Google Search Console data; null means not yet measured.",
+  "targets": [
+    {
+      "url": "/",
+      "primary": "3PL Houston",
+      "supporting": [
+        "third party logistics Houston",
+        "Houston fulfillment center",
+        "3PL company Houston TX"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/ecommerce-fulfillment-houston/",
+      "primary": "ecommerce fulfillment Houston",
+      "supporting": [
+        "order fulfillment Houston",
+        "Shopify fulfillment Houston",
+        "pick and pack Houston"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/warehousing-storage-houston/",
+      "primary": "warehousing Houston",
+      "supporting": [
+        "pallet storage Houston",
+        "warehouse space Houston",
+        "inventory storage Houston TX"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/container-drayage-devanning-houston/",
+      "primary": "container drayage Houston",
+      "supporting": [
+        "Port of Houston drayage",
+        "container devanning Houston",
+        "container unloading Houston"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/amazon-fba-prep-houston/",
+      "primary": "FBA prep center Houston",
+      "supporting": [
+        "Amazon prep service Houston",
+        "FNSKU labeling Houston",
+        "FBA forwarding Texas"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/kitting-assembly-houston/",
+      "primary": "kitting and assembly Houston",
+      "supporting": [
+        "subscription box fulfillment Houston",
+        "product bundling service Texas"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/fbm-fulfillment-by-merchant-houston/",
+      "primary": "FBM fulfillment Houston",
+      "supporting": [
+        "seller fulfilled prime 3PL",
+        "Amazon FBM service Texas"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/b2b-fulfillment-houston/",
+      "primary": "B2B fulfillment Houston",
+      "supporting": [
+        "wholesale fulfillment Texas",
+        "EDI fulfillment Houston",
+        "retail compliance 3PL"
+      ],
+      "intent": "commercial",
+      "position": null
+    },
+    {
+      "url": "/3pl-fulfillment-katy-tx/",
+      "primary": "3PL Katy TX",
+      "supporting": [
+        "fulfillment center Katy Texas"
+      ],
+      "intent": "local",
+      "position": null
+    },
+    {
+      "url": "/3pl-fulfillment-sugar-land-tx/",
+      "primary": "3PL Sugar Land TX",
+      "supporting": [
+        "fulfillment center Sugar Land"
+      ],
+      "intent": "local",
+      "position": null
+    },
+    {
+      "url": "/3pl-fulfillment-cypress-tx/",
+      "primary": "3PL Cypress TX",
+      "supporting": [
+        "fulfillment center Cypress Texas"
+      ],
+      "intent": "local",
+      "position": null
+    },
+    {
+      "url": "/3pl-fulfillment-pasadena-tx/",
+      "primary": "3PL Pasadena TX",
+      "supporting": [
+        "fulfillment center Pasadena Texas"
+      ],
+      "intent": "local",
+      "position": null
+    },
+    {
+      "url": "/guides/3pl-fulfillment-cost-houston/",
+      "primary": "3PL fulfillment cost",
+      "supporting": [
+        "how much does a 3PL cost",
+        "3PL pricing Houston",
+        "fulfillment pricing breakdown"
+      ],
+      "intent": "informational",
+      "position": null
+    },
+    {
+      "url": "/guides/3pl-vs-in-house-fulfillment/",
+      "primary": "3PL vs in-house fulfillment",
+      "supporting": [
+        "should I outsource fulfillment",
+        "in-house vs outsourced fulfillment cost"
+      ],
+      "intent": "informational",
+      "position": null
+    },
+    {
+      "url": "/guides/importing-through-port-of-houston/",
+      "primary": "importing through Port of Houston",
+      "supporting": [
+        "Port of Houston customs clearance",
+        "Houston import process"
+      ],
+      "intent": "informational",
+      "position": null
+    },
+    {
+      "url": "/guides/",
+      "primary": "Houston 3PL guides",
+      "supporting": [
+        "fulfillment guides"
+      ],
+      "intent": "informational",
+      "position": null
+    },
+    {
+      "url": "/blog/",
+      "primary": "3PL blog",
+      "supporting": [
+        "fulfillment blog"
+      ],
+      "intent": "informational",
+      "position": null
+    },
+    {
+      "url": "/blog/how-to-choose-a-3pl/",
+      "primary": "how to choose a 3PL",
+      "supporting": [
+        "3PL selection checklist",
+        "questions to ask a 3PL"
+      ],
+      "intent": "informational",
+      "position": null
+    }
+  ],
+  "opportunities": [
+    "3PL onboarding checklist",
+    "peak season fulfillment planning",
+    "DIM weight and shipping zones explained",
+    "Amazon FBA vs FBM which is cheaper",
+    "what is devanning",
+    "reduce shipping costs ecommerce",
+    "inventory forecasting for small brands",
+    "retail chargebacks how to avoid",
+    "Texas sales tax and 3PL nexus"
+  ]
+}

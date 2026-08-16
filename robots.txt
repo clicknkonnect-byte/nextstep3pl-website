@@ -1,4 +1,43 @@
+# Next Step 3PL — https://nextstep3pl.com
+# Search engines: full access.
 User-agent: *
+Allow: /
+
+# --------------------------------------------------------------------------
+# AI / LLM crawlers.
+#
+# These are ALLOWED on purpose: being quoted by ChatGPT, Claude, Perplexity and
+# Google's AI surfaces is a source of qualified leads for a B2B service like
+# this one, and blocking them removes the site from those answers entirely.
+#
+# Two distinct jobs, worth understanding before changing anything:
+#   - Search/answer crawlers (OAI-SearchBot, PerplexityBot, Claude-SearchBot)
+#     fetch pages to cite them in answers, with a link back. This is the traffic.
+#   - Training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) collect data
+#     to train models. No direct referral, but it shapes what models "know"
+#     about Next Step 3PL when asked to recommend a Houston 3PL.
+#
+# To stop model training while keeping AI search citations, change the training
+# group to Disallow: / and leave the search group alone.
+# --------------------------------------------------------------------------
+
+# AI search & answer engines (send referral traffic)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+
+# AI training crawlers
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
 Allow: /
 
 Sitemap: https://nextstep3pl.com/sitemap.xml

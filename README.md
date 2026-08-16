@@ -117,6 +117,50 @@ and could disappear. To take control of it, compress the file (an H.264 720p
 version should land around 2-3 MB), commit it to `assets/video/`, and update the
 `<video src>` on `index.html:101`.
 
+## SEO & content system
+
+A weekly Claude task audits the site, fixes what it finds, publishes one blog
+post, and pushes to `main` — which deploys to Hostinger automatically. Runs
+Mondays 09:00 local; it runs on next app launch if the app was closed.
+
+```
+seo/business.json      canonical NAP + business facts — the source of truth
+seo/keywords.json      one primary keyword per URL, plus a topic backlog
+seo/directories.md     citation/listing tracker with paste-ready copy
+seo/WEEKLY_RUN.md      the procedure the scheduled task follows
+tools/seo_audit.py     publish gate — titles, schema, links, orphans, sitemap
+tools/build_sitemap.py regenerates sitemap.xml with git-derived lastmod
+tools/blog.py          scaffolds posts and rebuilds /blog/
+llms.txt               structured summary for AI assistants
+```
+
+`seo/` and `tools/` are working files — excluded from the FTP deploy and
+404'd by `.htaccess`, so they never become publicly readable.
+
+Run the checks by hand any time:
+
+```bash
+python3 tools/seo_audit.py && python3 tools/build_sitemap.py
+```
+
+**The audit is the safety mechanism.** Because content publishes straight to the
+live site with no review step, nothing may be committed while `seo_audit.py`
+exits non-zero — it catches broken links, invalid schema, orphan pages, sitemap
+drift and keyword cannibalisation before they reach real visitors.
+
+**Rankings:** Search Console is verified and collecting, but it can't be queried
+from the local machine. Export *Performance → Queries → last 28 days* to
+`seo/gsc-latest.csv` (gitignored) and the next run will fold real positions into
+`keywords.json`. Without it the run reports "no fresh data" rather than guessing.
+
+**AI/LLM visibility:** `robots.txt` deliberately allows both AI search crawlers
+(OAI-SearchBot, PerplexityBot, Claude-SearchBot — these send referral traffic)
+and training crawlers. `llms.txt` gives assistants a clean, accurate summary to
+quote. To keep AI citations but opt out of model training, flip the training
+group in `robots.txt` to `Disallow: /`.
+
+---
+
 **Service card photos** — the original icon tiles were replaced with photography
 from [Pexels](https://www.pexels.com), which is free for commercial use with no
 attribution required. All are self-hosted in `assets/img/` at 1500×792 (the

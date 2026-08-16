@@ -17,3 +17,6 @@ desktop.ini
 /tmp/
 *.log
 *.zip
+
+# Search Console exports — raw query data, refreshed each week, not source
+seo/gsc-*.csv

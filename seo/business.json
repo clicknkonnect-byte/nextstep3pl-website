@@ -1,0 +1,35 @@
+{
+  "_comment": "Single source of truth for NAP (Name, Address, Phone). Directory listings, schema and llms.txt must all match this EXACTLY — inconsistent NAP across the web is one of the most common causes of weak local ranking. If any of this changes, update it here first, then propagate to: every page's JSON-LD, llms.txt, the footer, and every live directory listing in directories.md.",
+
+  "name": "Next Step 3PL",
+  "legalName": "Next Step 3PL",
+  "address": {
+    "street": "8805 Solon Road, Suite G2",
+    "city": "Houston",
+    "state": "TX",
+    "postalCode": "77064",
+    "country": "US"
+  },
+  "phone": "+1 (737) 537-3986",
+  "phoneE164": "+17375373986",
+  "email": "contact@nextstep3pl.com",
+  "website": "https://nextstep3pl.com",
+  "hours": "Mo-Fr 08:00-18:00",
+  "timezone": "America/Chicago",
+  "priceRange": "$$",
+  "categories": {
+    "primary": "Third-party logistics provider",
+    "secondary": ["Warehouse", "Fulfillment service", "Logistics service", "Shipping and mailing service"]
+  },
+  "shortDescription": "Houston-based third-party logistics: e-commerce fulfillment, warehousing, Port of Houston container drayage, Amazon FBA prep and kitting.",
+  "longDescription": "Next Step 3PL is a Houston third-party logistics provider serving growing e-commerce brands. We receive, store, pick, pack and ship orders with a 2 PM Central same-day dispatch cut-off, synced to Shopify, Amazon, TikTok Shop, WooCommerce and 120+ other platforms. Our warehouse sits close to the Port of Houston, so import containers can be drayed straight to our dock and devanned, counted and shelved the same day with no inland freight leg. Ground shipping from Houston reaches roughly 60% of the US population in two days. Services include e-commerce fulfillment, flexible pallet and bin warehousing, container drayage and devanning, Amazon FBA prep, kitting and assembly, FBM and Seller-Fulfilled Prime, and B2B and wholesale fulfillment with retailer routing-guide compliance.",
+  "serviceArea": ["Houston TX", "Katy TX", "Sugar Land TX", "Cypress TX", "Pasadena TX", "United States"],
+  "founded": "",
+  "socialProfiles": {
+    "instagram": "https://www.instagram.com/nextstep3pl/",
+    "facebook": "https://www.facebook.com/profile.php?id=61582673948156",
+    "googleBusiness": "https://maps.app.goo.gl/SJM7aJWTi89pZv9E8",
+    "whatsapp": "https://wa.me/17375373986",
+    "linkedin": ""
+  }
+}
