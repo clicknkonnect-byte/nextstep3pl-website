@@ -1,7 +1,7 @@
 # Next Step 3PL — nextstep3pl.com
 
 Static marketing site for Next Step 3PL (Houston 3PL: fulfillment, warehousing,
-container drayage, FBA prep, kitting, returns). Plain HTML, CSS and vanilla JS —
+container drayage, FBA prep, kitting). Plain HTML, CSS and vanilla JS —
 no build step, no framework, no server-side code.
 
 Previously hosted on Cloudflare Pages, now configured for **Hostinger shared hosting**.
@@ -16,8 +16,8 @@ Previously hosted on Cloudflare Pages, now configured for **Hostinger shared hos
 /.htaccess                          Hostinger/Apache config — see below
 /assets/style.css                   all styles
 /assets/app.js                      nav, scroll reveal, FAQ, calculators, quote form
-/assets/img/*.png                   service images
-/<service>-houston/                 8 service pages
+/assets/img/*.jpg                   service card photos (Pexels — see below)
+/<service>-houston/                 7 service pages
 /3pl-fulfillment-<city>-tx/         4 city pages
 /guides/                            guides index + 3 long-form guides
 /sitemap.xml, /robots.txt           SEO
@@ -116,6 +116,26 @@ CDN and eats bandwidth. The trade-off is that the URL belongs to someone else
 and could disappear. To take control of it, compress the file (an H.264 720p
 version should land around 2-3 MB), commit it to `assets/video/`, and update the
 `<video src>` on `index.html:101`.
+
+**Service card photos** — the original icon tiles were replaced with photography
+from [Pexels](https://www.pexels.com), which is free for commercial use with no
+attribution required. All are self-hosted in `assets/img/` at 1500×792 (the
+`.svc-img` aspect ratio is `72/38`, so replacements should match or they will be
+centre-cropped). Sources:
+
+| File | Pexels photo |
+|---|---|
+| `warehousing.jpg` | [5156696](https://www.pexels.com/photo/boxes-on-shelves-inside-a-warehouse-5156696/) |
+| `drayage.jpg` | [30517083](https://www.pexels.com/photo/containers-and-cranes-at-hamburg-port-30517083/) |
+| `fba.jpg` | [4483941](https://www.pexels.com/photo/worker-in-a-warehouse-4483941/) |
+| `kitting.jpg` | [7857523](https://www.pexels.com/photo/close-up-of-person-packing-an-order-into-a-cardboard-box-7857523/) |
+| `fbm.jpg` | [4440800](https://www.pexels.com/photo/stacks-of-boxes-ready-for-delivery-4440800/) |
+| `b2b.jpg` | [34585120](https://www.pexels.com/photo/forklift-operators-loading-pallets-on-truck-34585120/) |
+
+**Returns Management was removed** as a service. The page, its cards, footer
+links, sitemap entry and the copy that referenced it are all gone, and
+`.htaccess` 301-redirects the old `/returns-management-houston/` URL to
+`/#services` so the indexed link doesn't 404.
 
 **Editing** — no build step. Edit HTML/CSS/JS directly and push. CSS and JS are
 cached for a year by `.htaccess`, so after changing `style.css` or `app.js`,

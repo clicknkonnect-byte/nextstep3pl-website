@@ -30,7 +30,14 @@ RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L,NE]
 
 # ------------------------------------------------------------------------
-# 3. Redirect explicit /index.html requests to the clean folder URL.
+# 3. Retired pages -> closest live equivalent.
+#    Returns Management was removed as a service. The old URL was indexed,
+#    so send it to the services section instead of returning a 404.
+# ------------------------------------------------------------------------
+RewriteRule ^returns-management-houston/?$ /#services [R=301,L,NE]
+
+# ------------------------------------------------------------------------
+# 4. Redirect explicit /index.html requests to the clean folder URL.
 #    Matching on THE_REQUEST (the original request line) instead of the
 #    rewritten path is what stops this from looping.
 # ------------------------------------------------------------------------
@@ -39,12 +46,12 @@ RewriteRule ^ /%1 [R=301,L,NE]
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 4. Custom error page
+# 5. Custom error page
 # --------------------------------------------------------------------------
 ErrorDocument 404 /404.html
 
 # --------------------------------------------------------------------------
-# 5. Compression — Cloudflare did this automatically; Apache needs telling.
+# 6. Compression — Cloudflare did this automatically; Apache needs telling.
 # --------------------------------------------------------------------------
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
@@ -55,7 +62,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 6. Browser caching. HTML stays short so content edits go live promptly;
+# 7. Browser caching. HTML stays short so content edits go live promptly;
 #    static assets are cached hard. If you edit style.css or app.js and want
 #    the change immediately, bump the query string in the <link>/<script>
 #    tag (e.g. style.css?v=2) or clear the cache in hPanel.
@@ -84,7 +91,7 @@ ErrorDocument 404 /404.html
   </FilesMatch>
 
   # ------------------------------------------------------------------------
-  # 7. Security headers (the safe subset — none of these break the site).
+  # 8. Security headers (the safe subset — none of these break the site).
   # ------------------------------------------------------------------------
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
@@ -98,7 +105,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 8. Correct MIME types (some shared hosts serve these as octet-stream)
+# 9. Correct MIME types (some shared hosts serve these as octet-stream)
 # --------------------------------------------------------------------------
 <IfModule mod_mime.c>
   AddType image/svg+xml   .svg
@@ -108,7 +115,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 9. Block dotfiles so a stray .git directory or this file can't be read
+# 10. Block dotfiles so a stray .git directory or this file can't be read
 # --------------------------------------------------------------------------
 <FilesMatch "^\.">
   Require all denied
