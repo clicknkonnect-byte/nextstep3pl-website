@@ -1,0 +1,117 @@
+# ==========================================================================
+# Next Step 3PL — Apache / LiteSpeed config for Hostinger shared hosting
+# Upload this file to public_html alongside index.html.
+# ==========================================================================
+
+# --------------------------------------------------------------------------
+# 1. Directory index + clean URLs
+#    The site uses folder-per-page (/guides/ -> /guides/index.html).
+#    DirectorySlash keeps /guides redirecting to /guides/ so relative
+#    references and the canonical tags stay correct.
+# --------------------------------------------------------------------------
+DirectoryIndex index.html
+Options -Indexes +FollowSymLinks
+DirectorySlash On
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# ------------------------------------------------------------------------
+# 2. Force HTTPS and strip "www." in a single redirect hop.
+#    Canonical host is https://nextstep3pl.com (matches <link rel=canonical>
+#    and sitemap.xml). Two conditions are OR'd, the third captures the
+#    bare hostname, so http://www -> https://non-www costs only one 301.
+#    If you ever switch to the www hostname, change the canonical tags,
+#    sitemap.xml and robots.txt to match before editing this block.
+# ------------------------------------------------------------------------
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L,NE]
+
+# ------------------------------------------------------------------------
+# 3. Redirect explicit /index.html requests to the clean folder URL.
+#    Matching on THE_REQUEST (the original request line) instead of the
+#    rewritten path is what stops this from looping.
+# ------------------------------------------------------------------------
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\s/+(.*/)?index\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 4. Custom error page
+# --------------------------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# --------------------------------------------------------------------------
+# 5. Compression — Cloudflare did this automatically; Apache needs telling.
+# --------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 6. Browser caching. HTML stays short so content edits go live promptly;
+#    static assets are cached hard. If you edit style.css or app.js and want
+#    the change immediately, bump the query string in the <link>/<script>
+#    tag (e.g. style.css?v=2) or clear the cache in hPanel.
+# --------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                          "access plus 1 month"
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType application/xml           "access plus 1 hour"
+  ExpiresByType text/plain                "access plus 1 hour"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|png|jpe?g|webp|svg|woff2?|mp4)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # ------------------------------------------------------------------------
+  # 7. Security headers (the safe subset — none of these break the site).
+  # ------------------------------------------------------------------------
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # HSTS — leave commented until HTTPS is confirmed working on the live
+  # domain. Once enabled, browsers refuse plain HTTP for max-age seconds,
+  # so turning it on before SSL is issued locks visitors out.
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 8. Correct MIME types (some shared hosts serve these as octet-stream)
+# --------------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/svg+xml   .svg
+  AddType application/xml .xml
+  AddType video/mp4       .mp4
+  AddType font/woff2      .woff2
+</IfModule>
+
+# --------------------------------------------------------------------------
+# 9. Block dotfiles so a stray .git directory or this file can't be read
+# --------------------------------------------------------------------------
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+RedirectMatch 404 /\.git
