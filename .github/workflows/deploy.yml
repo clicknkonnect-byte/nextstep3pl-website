@@ -1,0 +1,58 @@
+name: Deploy to Hostinger
+
+# Pushes to main are published to Hostinger over FTP.
+# You can also run it by hand from the Actions tab (workflow_dispatch).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publish to public_html
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      - name: Sync files to Hostinger over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          # All three come from repo Settings -> Secrets and variables -> Actions.
+          # FTP_SERVER   e.g. ftp.nextstep3pl.com  (hPanel -> Files -> FTP Accounts)
+          # FTP_USERNAME e.g. u123456789.nextstep3pl
+          # FTP_PASSWORD the FTP account password
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # Where the site lives on the server. For a primary domain this is
+          # public_html/. For an addon domain it is usually
+          # domains/nextstep3pl.com/public_html/ — check in hPanel -> File Manager.
+          server-dir: public_html/
+
+          # Only repo files are uploaded; these never leave the repo.
+          # seo/ and tools/ are working files — keyword targets, the audit
+          # scripts, the directory tracker. They are not part of the website and
+          # would be publicly readable if uploaded, so they stay out of the sync.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
+            **/._*
+            README.md
+            .gitignore
+            seo/**
+            tools/**
+
+          # Deletes files on the server that no longer exist in the repo, so the
+          # live site always matches main. Set to false if you keep unrelated
+          # files (webmail folders, other apps) inside the same directory.
+          dangerous-clean-slate: false
+
+          # Keeps a manifest on the server so later runs upload only what changed.
+          state-name: .ftp-deploy-sync-state.json
