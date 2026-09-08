@@ -181,10 +181,20 @@
       ],
       "intent": "informational",
       "position": null
+    },
+    {
+      "url": "/blog/3pl-onboarding-checklist/",
+      "primary": "3PL onboarding checklist",
+      "supporting": [
+        "3PL onboarding process",
+        "how long does 3PL onboarding take",
+        "switching to a 3PL"
+      ],
+      "intent": "informational",
+      "position": null
     }
   ],
   "opportunities": [
-    "3PL onboarding checklist",
     "peak season fulfillment planning",
     "DIM weight and shipping zones explained",
     "Amazon FBA vs FBM which is cheaper",
