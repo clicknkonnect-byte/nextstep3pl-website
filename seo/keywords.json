@@ -192,10 +192,20 @@
       ],
       "intent": "informational",
       "position": null
+    },
+    {
+      "url": "/blog/peak-season-fulfillment-planning/",
+      "primary": "peak season fulfillment",
+      "supporting": [
+        "peak season fulfillment planning",
+        "holiday fulfillment planning",
+        "Q4 fulfillment checklist"
+      ],
+      "intent": "informational",
+      "position": null
     }
   ],
   "opportunities": [
-    "peak season fulfillment planning",
     "DIM weight and shipping zones explained",
     "Amazon FBA vs FBM which is cheaper",
     "what is devanning",
