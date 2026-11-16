@@ -203,12 +203,22 @@
       ],
       "intent": "informational",
       "position": null
+    },
+    {
+      "url": "/blog/what-is-devanning/",
+      "primary": "what is devanning",
+      "supporting": [
+        "container devanning explained",
+        "devanning vs transload",
+        "floor-loaded container unloading"
+      ],
+      "intent": "informational",
+      "position": null
     }
   ],
   "opportunities": [
     "DIM weight and shipping zones explained",
     "Amazon FBA vs FBM which is cheaper",
-    "what is devanning",
     "reduce shipping costs ecommerce",
     "inventory forecasting for small brands",
     "retail chargebacks how to avoid",
