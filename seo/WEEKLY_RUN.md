@@ -34,20 +34,41 @@ broke. Fix that first and skip the content work this week.
 
 ## 2. Rankings
 
-The site owner has Google Search Console verified and collecting. GSC cannot be
-queried from here without credentials, so either:
+Search Console is reachable through the **Composio Google Search Console connector**
+(account alias `adeptecom`, property `sc-domain:nextstep3pl.com`, permission
+siteOwner — verified working 2026-11-21). Call `COMPOSIO_SEARCH_TOOLS` first, then run
+tools via `COMPOSIO_MULTI_EXECUTE_TOOL`. The property is a **Domain** property, so
+always pass `site_url` as `sc-domain:nextstep3pl.com`; `https://...` forms return 404.
+If the connector is unavailable, say so and leave positions untouched — do not invent
+numbers, and do not substitute a live Google search (scraped SERPs are personalised
+and location-skewed, so they are not a rank measurement).
 
-- **Preferred:** ask the owner to export *Performance → Queries → last 28 days* as
-  CSV and drop it at `seo/gsc-latest.csv` (gitignored). If that file exists and is
-  recent, read it and update `"position"` for each target in `seo/keywords.json`.
-- **Otherwise:** leave positions untouched and note in the summary that no fresh
-  GSC data was available. Do not invent numbers, and do not substitute a live
-  Google search — scraped SERPs are personalised and location-skewed, so they are
-  not a rank measurement.
+Pull, for the last 28 days ending 3 days ago (data lags 2–3 days):
 
-Flag in the summary: any target that moved more than 3 positions, anything that
-dropped off page 1, and any query in the CSV with impressions but no matching page
-(that is a content gap worth a post).
+1. `GOOGLE_SEARCH_CONSOLE_SEARCH_ANALYTICS_QUERY` with `dimensions: ["query"]` and again
+   with `["page"]` (set `sync_response_to_workbench: true`; these are large).
+2. `GOOGLE_SEARCH_CONSOLE_INSPECT_URL` for every URL in `sitemap.xml` — report any that
+   are not "Submitted and indexed". The page-indexing UI report is not available via
+   API, but this per-URL check is, and it caught a real drop on 2026-11-21.
+3. `GOOGLE_SEARCH_CONSOLE_LIST_SITEMAPS` — confirm errors = 0 and that the sitemap was
+   read recently.
+
+Update `"position"` in `seo/keywords.json` for each target from the page/query data.
+
+Interpreting the data — things that bit us before:
+- **Most clicks are anonymised.** On 2026-11-21 the query rows summed to 8 clicks while
+  page rows showed ~130. Judge by impressions and position, not by query-level clicks.
+- Split **branded** (`next step`, `nex3pl`, `nextstep`) from non-branded; branded
+  position is flattering and hides the real ranking problem.
+- Clicks from Pakistan at ~4% of impressions and position ~4 are very likely the
+  owner's own team checking the site — do not read them as demand.
+- `www.` and `http://` URLs showing up as "Page with redirect" are normal.
+- **Do not click "Request indexing" or use the UI quota** — it is ~10/day, shared, and
+  was already exhausted on 2026-11-21. Sitemap + internal links is the route.
+
+Flag in the summary: any target that moved more than 3 positions, any page that fell out
+of the index, anything that dropped off page 1, and any query with impressions but no
+matching page (a content gap worth a post).
 
 ## 3. Fix before you add
 
