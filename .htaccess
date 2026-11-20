@@ -78,8 +78,12 @@ ErrorDocument 404 /404.html
   ExpiresByType image/webp                "access plus 1 year"
   ExpiresByType image/svg+xml             "access plus 1 year"
   ExpiresByType video/mp4                 "access plus 1 year"
-  ExpiresByType application/xml           "access plus 1 hour"
-  ExpiresByType text/plain                "access plus 1 hour"
+  # Crawler-facing files must never be served stale. Hostinger's CDN was observed
+  # serving a ~40-hour-old sitemap.xml under a 1-hour policy, so Googlebot and
+  # Bingbot could read an out-of-date URL list. 0 seconds makes the CDN revalidate
+  # on every request, exactly as it already does for HTML (which stays fresh).
+  ExpiresByType application/xml           "access plus 0 seconds"
+  ExpiresByType text/plain                "access plus 0 seconds"
 </IfModule>
 
 <IfModule mod_headers.c>
