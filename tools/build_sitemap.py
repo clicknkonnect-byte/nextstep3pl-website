@@ -49,6 +49,18 @@ def changefreq(url: str) -> str:
 
 
 def lastmod(path: pathlib.Path) -> str:
+    # A page edited but not yet committed has no git date that reflects the edit;
+    # without this, a freshly rewritten page would be listed with its OLD date and
+    # the sitemap would tell Google nothing changed. Use today for dirty files.
+    try:
+        dirty = subprocess.run(
+            ["git", "status", "--porcelain", "--", str(path.relative_to(ROOT))],
+            cwd=ROOT, capture_output=True, text=True, timeout=10,
+        ).stdout.strip()
+        if dirty:
+            return datetime.now().strftime("%Y-%m-%d")
+    except Exception:
+        pass
     try:
         out = subprocess.run(
             ["git", "log", "-1", "--format=%cs", "--", str(path.relative_to(ROOT))],

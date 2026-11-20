@@ -4,7 +4,8 @@ This is the procedure the scheduled Claude task follows every Monday. It is
 written to be executed without any memory of the conversation that created it.
 
 **Repo:** `/Volumes/Bilal Sher/Claude Marketing agency/nextstep3pl-website`
-**Publishes to:** `main` → GitHub Actions → Hostinger `public_html` (live in ~2 min)
+**Publishes to:** `main` → Hostinger native Git auto-deploy → `public_html` (live in ~30s–2 min).
+There is no GitHub Actions workflow — do not look for one and do not treat its absence as a broken deploy.
 
 Because this publishes straight to the live site with no human review, the audit
 gate in step 6 is not optional. **If `tools/seo_audit.py` exits non-zero, fix the
@@ -26,9 +27,10 @@ broke. Fix that first and skip the content work this week.
 ## 1. Health check
 
 - Confirm the live site responds: `curl -sI https://nextstep3pl.com | head -1`
-- Confirm the last deploy succeeded: `gh run list --limit 3`
-- If the last Actions run failed, fix the deploy before publishing more content —
-  otherwise this week's work silently never goes live.
+- Confirm the deploy chain works by comparing a live URL against the repo file, e.g.
+  `curl -s https://nextstep3pl.com/robots.txt | md5 -q` against `md5 -q robots.txt`.
+  If they differ with no commit pending, auto-deploy is stuck — say so in the report
+  before publishing more, otherwise this week's work silently never goes live.
 
 ## 2. Rankings
 
@@ -117,11 +119,29 @@ site. Warnings are advisory — judge them.
 git add -A
 git commit -m "Weekly SEO: <what changed>"
 git push
-gh run watch      # confirm the deploy actually succeeded
 ```
 
-Do not report success until the Actions run is green. A green commit with a red
-deploy means nothing changed for real visitors.
+Then confirm it is actually live. Poll the new or changed URL until it returns the
+new content (usually under 2 minutes):
+
+```bash
+curl -s https://nextstep3pl.com/<new-path>/ | md5 -q      # compare with: md5 -q <new-path>/index.html
+```
+
+Do not report success until the live page matches the repo. A pushed commit that
+never deployed means nothing changed for real visitors.
+
+Once live, notify Bing and other IndexNow engines (Bing's index feeds Copilot and
+parts of ChatGPT search, so an unseen page is a page assistants are less likely to
+cite). Google is covered by the sitemap, which Search Console re-reads on its own:
+
+```bash
+python3 tools/indexnow.py --changed
+```
+
+Exit 0 means accepted. A non-zero exit because the key file is not yet reachable
+just means the deploy has not finished — wait and retry; do not treat it as a failure
+of the run.
 
 ## 8. Report
 
